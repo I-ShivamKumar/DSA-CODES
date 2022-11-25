@@ -1,32 +1,62 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
-#include <iostream>
-#include <algorithm>
+// Binary Search Tree operations in C++
+
+#include <bits/stdc++.h>
 using namespace std;
 
-class node{
-    public:
-        int data;
-        node*left;
-        node*right;
-        node(int data){
-            this->data=data;
-            this->left=NULL;
-            this->right=NULL;
-    }
+struct node {
+    int data;
+    struct node *left, *right;
 };
-node* root;
 
+// Create a node
+struct node *newNode(int item) {
+    struct node *temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = item;
+    temp->left = temp->right = NULL;
+    return temp;
+}
 
-int main() {
+// Inorder Traversal
+void inorder(struct node *root) {
+    if (root != NULL) {
+    // Traverse left
+    inorder(root->left);
+
+    // Traverse root
+    cout << root->data << " -> ";
+
+    // Traverse right
+    inorder(root->right);
+    }
+}
+
+// Insert a node
+struct node *insert(struct node *node, int data) {
     
-    
-    return 0;
+    if (node == NULL)
+        return newNode(data);
+    if (data < node->data)
+        node->left = insert(node->left, data);
+    else
+        node->right = insert(node->right, data);
+    return node;
 }
 
 
+// Driver code
+int main() {
+    struct node *root = NULL;
+    root = insert(root, 8);
+    root = insert(root, 3);
+    root = insert(root, 1);
+    root = insert(root, 6);
+    root = insert(root, 7);
+    root = insert(root, 10);
+    root = insert(root, 14);
+    root = insert(root, 4);
 
+    cout << "Inorder traversal: ";
+    inorder(root);
 
-
-
+    return 0;
+}
